@@ -5,9 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+const customResponse = require('./common/responseHandler')
+// Database connection
+var mongoose = require('mongoose');
+const DEV = require('./config/dev.config.json')
+mongoose.connect(DEV.databaseUrl, { useMongoClient: true });
+mongoose.Promise = global.Promise;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var types = require('./routes/types');
+var questions = require('./routes/questions');
 
 var app = express();
 
@@ -24,8 +32,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(customResponse)
 app.use('/', index);
 app.use('/users', users);
+app.use('/types', types);
+app.use('/questions', questions);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
