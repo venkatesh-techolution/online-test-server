@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var QuestionSchema = mongoose.Schema({
-    content: {type: String, unique: true, required: true},
+    question: {type: String, required: true},
     isDeleted: Boolean
 })
 

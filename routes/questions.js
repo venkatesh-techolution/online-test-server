@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   })
 });
 router.post('/', function(req, res, next) {
-  Question.create({content: req.body.question})
+  Question.create({question: req.body.question})
   .then((question) => {
     Type.update(
       { name: req.body.type }, 
